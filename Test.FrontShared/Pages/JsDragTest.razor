@@ -1,0 +1,55 @@
+﻿@page "/js-dragdrop-test"
+
+<h1>Drag and Drop Zones</h1>
+
+<label>Drop zone 1</label>
+<div id="zone1" class="dropzone" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
+    <div id="draggable" class="draggable" draggable="true" ondragstart="dragstartHandler(event)">
+        Drag me!
+    </div>
+</div>
+<label>Drop zone 2</label>
+<div id="zone2" class="dropzone" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
+</div>
+
+<style>
+    .dropzone {
+        width: 300px;
+        height: 150px;
+        margin: 20px;
+        border: 2px dashed gray;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background-color: #f0f0f0;
+    }
+
+    .draggable {
+        width: 100px;
+        height: 50px;
+        background-color: red;
+        color: white;
+        text-align: center;
+        line-height: 50px;
+        cursor: grab;
+    }
+</style>
+
+<script>
+    function dragstartHandler(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function dragoverHandler(ev) {
+        ev.preventDefault();
+    }
+
+    function dropHandler(ev) {
+        ev.preventDefault();
+        const data = ev.dataTransfer.getData("text");
+        const draggedElement = document.getElementById(data);
+
+        ev.target.appendChild(draggedElement);
+    }
+</script>

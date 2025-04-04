@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Test.ApiShared.Models
+@inject HttpClient HttpClient
+@page "/products"
+
+@attribute [Authorize]
+
+<h3>Products</h3>
+
+@if (products == null || products.Count == 0)
+{
+    <p>Loading products...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Brand</td>
+                    <td>@product.Description</td>
+                    <td>@product.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await HttpClient.GetAsync("api/products");
+        if(response.IsSuccessStatusCode){
+            products = await response.Content.ReadFromJsonAsync<List<Product>>();
+        }
+    }
+}

@@ -1,0 +1,16 @@
+﻿@page "/dragdrop-test"
+
+<div draggable="true" @ondragstart="OnDragStart" style="background: lightblue; padding: 10px; width: 100px;">
+    Drag me!
+</div>
+<div @ondragover="OnDragOver" @ondragover:preventDefault @ondrop="OnDrop" style="border: 2px dashed red; padding: 20px; height: 100px;">
+    Drop here!
+</div>
+<p>Log: @logMessage</p>
+
+@code {
+    private string logMessage = "Waiting...";
+    private void OnDragStart(DragEventArgs args) => logMessage = "Drag started";
+    private void OnDragOver(DragEventArgs args) => logMessage = "Drag over";
+    private void OnDrop(DragEventArgs args) => logMessage = "Dropped";
+}

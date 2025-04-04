@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Test.FrontShared
+
+<Router AppAssembly="typeof(FrontShared.Layout.MainLayout).Assembly">
+    <Found Context="routeData">
+        <CascadingAuthenticationState>
+            <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(FrontShared.Layout.MainLayout)" />
+            <FocusOnNavigate RouteData="routeData" Selector="h1" />
+        </CascadingAuthenticationState>
+    </Found>
+    <NotFound>
+        Not Found
+    </NotFound>
+</Router>

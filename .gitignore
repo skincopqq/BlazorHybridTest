@@ -1,0 +1,64 @@
+# Временные файлы IDE
+.vscode/
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.csproj.user
+
+# Сборочные выходные файлы
+bin/
+obj/
+
+# Файлы публикации
+wwwroot/
+dist/
+node_modules/
+wwwroot/css/
+wwwroot/js/
+
+# Лог файлы
+*.log
+
+
+# Конфигурации и временные файлы
+*.config
+*.json
+*.env
+*.orig
+
+# Резервные файлы
+*.bak
+*.swp
+Thumbs.db
+.DS_Store
+
+# Файлы из MAUI
+AppPackages/
+AppOutput/
+*.db*
+
+# Файлы, связанные с WPF
+GeneratedFiles/
+*.g.i.cs
+*.g.cs
+
+# Файлы Blazor WebAssembly
+wwwroot/_framework/
+wwwroot/_content/
+wwwroot/service-worker-assets.js
+wwwroot/service-worker.js
+wwwroot/manifest.json
+wwwroot/appsettings.json
+
+# Специфические для операционных систем
+*.pdb
+*.lock
+*.pyc
+*.sqlite
+*.ldb
+
+# Другие
+coverage/
+testresults/

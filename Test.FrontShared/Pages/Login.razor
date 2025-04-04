@@ -1,0 +1,63 @@
+﻿@page "/login"
+
+@using Microsoft.AspNetCore.Components.Authorization
+@using Test.ApiShared.Models
+@using Test.FrontShared.Services
+
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject IStorageWrapper Storage
+@inject AuthenticationStateProvider authStateProvider
+
+<h3>Вход</h3>
+
+<EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label for="username">Логин:</label>
+        <InputText id="username" @bind-Value="loginModel.Username" class="form-control" />
+    </div>
+    <div>
+        <label for="password">Пароль:</label>
+        <InputText id="password" @bind-Value="loginModel.Password" type="password" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Войти</button>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@code {
+    private LoginModel loginModel = new();
+    private string errorMessage;
+
+    private async Task HandleLogin()
+    {
+        errorMessage = string.Empty;
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("/api/auth/login", loginModel);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var successLoginDto = await response.Content.ReadFromJsonAsync<SuccessLoginDto>();
+                await Storage.SetItemAsync("authToken", successLoginDto.AccessToken);
+                await authStateProvider.GetAuthenticationStateAsync();
+                Navigation.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = "Неверное имя пользователя или пароль.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Произошла ошибка: {ex.Message}";
+        }
+    }
+}
