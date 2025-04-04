@@ -24,7 +24,6 @@ wwwroot/js/
 
 # Конфигурации и временные файлы
 *.config
-*.json
 *.env
 *.orig
 
